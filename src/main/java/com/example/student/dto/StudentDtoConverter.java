@@ -1,5 +1,6 @@
-package com.example.demo.student;
+package com.example.student.dto;
 
+import com.example.student.model.Student;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class StudentDtoConverter {
         dto.setId(student.getId());
         dto.setName(student.getName());
         dto.setEmail(student.getEmail());
+        dto.setDob(student.getDob());
 
         return dto;
     }
@@ -28,6 +30,7 @@ public class StudentDtoConverter {
         st.setId(dto.getId());
         st.setName(dto.getName());
         st.setEmail(dto.getEmail());
+        st.setDob(dto.getDob());
 
         return st;
     }
