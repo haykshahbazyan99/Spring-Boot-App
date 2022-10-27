@@ -2,6 +2,7 @@ package com.example.student.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -10,18 +11,20 @@ import java.time.Period;
 @Entity
 @Data
 @NoArgsConstructor
+@ConfigurationProperties("my")
 @Table(name = "REGISTERED_STUDENTS")
 public class Student {
 
     @Id
-    @SequenceGenerator(name = "student_sequence", sequenceName = "student_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "student_sequence")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String name;
     private String email;
     private LocalDate dob;
     @Transient
     private Integer age;
+    private String address;
+
 
 
     public Student(String name, String email, LocalDate dob) {

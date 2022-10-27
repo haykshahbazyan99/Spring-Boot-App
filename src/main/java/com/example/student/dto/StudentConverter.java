@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class StudentDtoConverter {
+public class StudentConverter {
 
     public StudentDto entityToDto(Student student) {
 
@@ -27,7 +27,7 @@ public class StudentDtoConverter {
 
     public Student dtoToEntity(StudentDto dto) {
         Student st =  new Student();
-        st.setId(dto.getId());
+//        st.setId(dto.getId());
         st.setName(dto.getName());
         st.setEmail(dto.getEmail());
         st.setDob(dto.getDob());

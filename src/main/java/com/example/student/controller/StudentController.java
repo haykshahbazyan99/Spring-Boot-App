@@ -1,6 +1,7 @@
 package com.example.student.controller;
 
 import com.example.student.dto.StudentDto;
+import com.example.student.model.Student;
 import com.example.student.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -8,18 +9,30 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/student")
+@RequestMapping("students")
 @RequiredArgsConstructor
 public class StudentController {
 
-//    @Autowired
-    private StudentService studentService;
+//    @Autowired // without final
+    private final StudentService studentService;
+
+
+//    @GetMapping
+//    public List<Student> getStudents() {
+//        return studentService.getStudents();
+//    }
 
 
     @GetMapping
     public List<StudentDto> getStudents() {
        return studentService.getStudents();
     }
+
+
+//    @PostMapping()  //path = "/students", consumes = "application/x-www-form-urlencoded"
+//    public void saveStudent(@RequestBody StudentDto studentDto) {
+//        studentService.saveStudent(studentDto);
+//    }
 
     @PostMapping
     public void registerNewStudent(@RequestBody StudentDto studentDto) {
