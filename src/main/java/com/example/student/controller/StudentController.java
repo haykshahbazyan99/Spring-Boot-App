@@ -2,6 +2,7 @@ package com.example.student.controller;
 
 import com.example.student.dto.StudentDto;
 import com.example.student.model.Student;
+import com.example.student.repository.StudentRepository;
 import com.example.student.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +36,13 @@ public class StudentController {
     public void updateStudent(@PathVariable("studentId") Integer studentId,
                               @RequestBody StudentDto studentDto) {
         studentService.updateStudent(studentId, studentDto);
+    }
+
+
+    @GetMapping("{name}/{city}")
+    public List<Student> findByNameAndCity(@PathVariable("name") String name,
+                                           @PathVariable("city") String city) {
+        return studentService.findByNameAndCity(name, city);
     }
 
 }

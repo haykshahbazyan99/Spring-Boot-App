@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface StudentRepository extends JpaRepository<Student, Integer> {
+public interface StudentRepository extends JpaRepository<Student, Integer>, StudentCustomRepository {
 
 //    @Query("select s from Student s where s.email = ?1")
     Optional<Student> findByEmail(String email);

@@ -5,15 +5,9 @@ import com.example.student.dto.StudentConverter;
 import com.example.student.mapper.StudentMapper;
 import com.example.student.model.Student;
 import com.example.student.repository.StudentRepository;
-import com.example.student.weather.WeatherService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
 
 
 import java.util.List;
@@ -61,5 +55,9 @@ public class StudentService {
 
         student.setName(studentDto.getName());
         student.setEmail(studentDto.getEmail());
+    }
+
+    public List<Student> findByNameAndCity(String name, String city) {
+        return studentRepository.findByNameAndCity(name, city);
     }
 }
