@@ -15,5 +15,7 @@ public class StudentDto {
     private String name;
     private String email;
     private LocalDate dob;
+    private String city;
+    private double cityTemperature;
 
 }

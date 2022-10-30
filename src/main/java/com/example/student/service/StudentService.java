@@ -5,6 +5,8 @@ import com.example.student.dto.StudentConverter;
 import com.example.student.mapper.StudentMapper;
 import com.example.student.model.Student;
 import com.example.student.repository.StudentRepository;
+import com.example.student.weather.WeatherService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
@@ -19,33 +21,13 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class StudentService {
 
-    @Autowired
-    private StudentRepository studentRepository;
-    @Autowired
-    private StudentConverter converter;
-    @Autowired
-    private StudentMapper studentMapper;
+    private final StudentRepository studentRepository;
+    private final StudentConverter converter;
+    private final StudentMapper studentMapper;
 
-    private final RestTemplate restTemplate;
-
-    @Autowired
-    public StudentService(RestTemplateBuilder restTemplateBuilder) {
-        this.restTemplate = restTemplateBuilder.build();
-    }
-
-
-//    public void saveStudent(StudentDto studentDto) {
-//        HttpEntity<StudentDto> entity = new HttpEntity<>(studentDto);
-//        restTemplate.exchange("http://localhost:8080/students", HttpMethod.POST, entity, void.class).getBody();
-//    }
-
-
-//    public List<Student> getStudents() {
-//        return restTemplate.exchange("http://localhost:8080/students", HttpMethod.GET, null, List.class).getBody();
-//
-//    }
 
     public List<StudentDto> getStudents() {
         List<Student> allStudents = studentRepository.findAll();
@@ -55,7 +37,7 @@ public class StudentService {
     public void addNewStudent(StudentDto studentDto) {
 
         Student student = converter.dtoToEntity(studentDto);
-        Optional<Student> studentOptional = studentRepository.findStudentByEmail(student.getEmail());
+        Optional<Student> studentOptional = studentRepository.findByEmail(student.getEmail());
 
         if (studentOptional.isPresent()) {
             throw new IllegalStateException("student with email " + student.getEmail() + " is already registered");
@@ -63,7 +45,7 @@ public class StudentService {
         studentRepository.save(student);
     }
 
-    public void deleteStudent(Long studentId) {
+    public void deleteStudent(Integer studentId) {
         boolean exists = studentRepository.existsById(studentId);
 
         if(!exists) {
@@ -73,11 +55,11 @@ public class StudentService {
     }
 
 
-    public void updateStudent(Long studentId, String name, String email) {
+    public void updateStudent(Integer studentId, StudentDto studentDto) {
 
         Student student = studentRepository.findById(studentId).orElseThrow();
 
-        student.setName(name);
-        student.setEmail(email);
+        student.setName(studentDto.getName());
+        student.setEmail(studentDto.getEmail());
     }
 }

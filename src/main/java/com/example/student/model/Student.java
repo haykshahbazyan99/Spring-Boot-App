@@ -23,14 +23,19 @@ public class Student {
     private LocalDate dob;
     @Transient
     private Integer age;
-    private String address;
+    private String city;
+
+    @Column(name = "city_temperature")
+    private double cityTemperature;
 
 
 
-    public Student(String name, String email, LocalDate dob) {
+    public Student(String name, String email, LocalDate dob, String city, double cityTemperature) {
         this.name = name;
         this.email = email;
         this.dob = dob;
+        this.city = city;
+        this.cityTemperature = cityTemperature;
     }
 
     public Integer getAge() {

@@ -13,14 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudentController {
 
-//    @Autowired // without final
     private final StudentService studentService;
-
-
-//    @GetMapping
-//    public List<Student> getStudents() {
-//        return studentService.getStudents();
-//    }
 
 
     @GetMapping
@@ -28,27 +21,20 @@ public class StudentController {
        return studentService.getStudents();
     }
 
-
-//    @PostMapping()  //path = "/students", consumes = "application/x-www-form-urlencoded"
-//    public void saveStudent(@RequestBody StudentDto studentDto) {
-//        studentService.saveStudent(studentDto);
-//    }
-
     @PostMapping
     public void registerNewStudent(@RequestBody StudentDto studentDto) {
         studentService.addNewStudent(studentDto);
     }
 
     @DeleteMapping("{studentId}")
-    public void deleteStudent(@PathVariable("studentId") Long studentId) {
+    public void deleteStudent(@PathVariable("studentId") Integer studentId) {
         studentService.deleteStudent(studentId);
     }
 
     @PutMapping("{studentId}")
-    public void updateStudent(@PathVariable("studentId") Long studentId,
-                              @RequestParam("name") String name,
-                              @RequestParam("email") String email) {
-        studentService.updateStudent(studentId, name, email);
+    public void updateStudent(@PathVariable("studentId") Integer studentId,
+                              @RequestBody StudentDto studentDto) {
+        studentService.updateStudent(studentId, studentDto);
     }
 
 }

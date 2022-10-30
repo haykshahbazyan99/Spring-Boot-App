@@ -1,36 +1,27 @@
 package com.example.student.configuration;
 
-import com.example.student.repository.StudentRepository;
 import com.example.student.model.Student;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
-import java.util.List;
-
-import static java.time.Month.*;
+import java.time.Month;
 
 @Configuration
-public class StudentConfig {
+public class StudentConfig implements CommandLineRunner {
 
-    @Bean
-    CommandLineRunner commandLineRunner(StudentRepository repository) {
-        return args -> {
-            Student mariam = new Student(
-                    "Mariam",
-                    "mariam@gmail.com",
-                    LocalDate.of(2000, JANUARY, 5)
-            );
+    @Autowired
+    private RestTemplate restTemplate;
 
-            Student alex = new Student(
-                    "Alex",
-                    "alex@gmail.com",
-                    LocalDate.of(2004, JANUARY, 5)
-            );
+    @Override
+    public void run(String... args) throws Exception {
 
-            repository.saveAll(List.of(mariam, alex));
-        };
+        Student mariam = new Student("Mariam", "mariamik@gmail.com", LocalDate.of(2000, Month.FEBRUARY, 5), "Yerevan", 4);
+        restTemplate.exchange("http://localhost:8080/students", HttpMethod.POST,  new HttpEntity<>(mariam), Void.class);
     }
 
 }

@@ -4,3 +4,4 @@ create table registered_students (
             email varchar(255),
             name varchar(255)
             );
+
